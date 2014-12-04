@@ -18,6 +18,8 @@ export LC_COLLATE="C"
 shopt -s cdable_vars
 export ws="/Users/nrajrao/workspace/projects"
 
+export JAVA_HOME=$(/usr/libexec/java_home) # for mac
+
 # Aliases
 alias ls='ls -Alp'
 alias l='ls -xpA --color=auto'
