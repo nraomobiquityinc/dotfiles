@@ -35,8 +35,8 @@ function gau(){
     git update-index --assume-unchanged $1
 }
 alias gl='git log'
-alias g='mvim >& /dev/null'
-alias gvim='mvim >& /dev/null'
+alias g='mvim'
+alias gvim='mvim'
 alias w='cd ~/workspace/haskell/haskell-sandbox'
 alias rr='rm -fr'
 alias python='python -B'
