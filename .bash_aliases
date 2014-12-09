@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#------------------------------------------------------
+# General *Nix specific stuff
+#------------------------------------------------------
+
 # Path
 PATH=~/.cabal/bin:$PATH
 
@@ -15,11 +19,6 @@ shopt -s checkwinsize
 # for ls - show dotfiles first
 export LC_COLLATE="C"
 
-shopt -s cdable_vars
-export ws="/Users/nrajrao/workspace/projects"
-
-export JAVA_HOME=$(/usr/libexec/java_home) # for mac
-
 # Aliases
 alias ls='ls -Alp'
 alias l='ls -xpA --color=auto'
@@ -27,6 +26,7 @@ alias h=history
 alias gas='git add -A; git status'
 alias gaus='git add -u; git status'
 alias gd='git diff'
+alias gb='git branch'
 alias gs='git status'
 alias gp='git push github `git rev-parse --abbrev-ref HEAD`'
 alias gh='git push heroku `git rev-parse --abbrev-ref HEAD`'
@@ -35,8 +35,9 @@ function gau(){
     git update-index --assume-unchanged $1
 }
 alias gl='git log'
-alias g='mvim'
-alias gvim='mvim'
+alias g='mvim >& /dev/null'
+alias gvim='mvim >& /dev/null'
+alias vim='mvim'
 alias w='cd ~/workspace/haskell/haskell-sandbox'
 alias rr='rm -fr'
 alias python='python -B'
@@ -45,8 +46,11 @@ alias ru='pkill -u 1000 vmtoolsd; vmtoolsd -n vmusr &' #restart unity
 alias t='tree'
 alias ta='sudo time-admin' #time and date dialog in xfce
 alias r=' source ~/.rvm/scripts/rvm && rvm use 1.8.7' # load ruby 1.8.7
+alias ps="ps -ef | grep $(whoami)"
 
-## Python
+#------------------------------------------------------
+# Python
+#------------------------------------------------------
 ##export PYTHONSTARTUP='/home/neeraj/setuppythonenv.py'
 #
 #if [ ! -f /usr/local/bin/virtualenv ];
@@ -60,16 +64,18 @@ alias r=' source ~/.rvm/scripts/rvm && rvm use 1.8.7' # load ruby 1.8.7
 ## More commands: http://docs.python-guide.org/en/latest/dev/virtualenvs/
 #export WORKON_HOME=~/.virtualenvs
 #source /usr/local/bin/virtualenvwrapper.sh
-#
-## ghc-pkg-reset
-## Removes all installed GHC/cabal packages, but not binaries, docs, etc.
-## Use this to get out of dependency hell and start over, at the cost of some rebuilding time.
-#function ghc-pkg-reset() {
-#    read -p 'erasing all your user ghc and cabal packages - are you sure (y/n) ? ' ans
-#    test x$ans == xy && ( \
-#        echo 'erasing directories under ~/.ghc'; rm -rf `find ~/.ghc -maxdepth 1 -type d`; \
-#        echo 'erasing ~/.cabal/lib'; rm -rf ~/.cabal/lib; \
-#        # echo 'erasing ~/.cabal/packages'; rm -rf ~/.cabal/packages; \
-#        # echo 'erasing ~/.cabal/share'; rm -rf ~/.cabal/share; \
-#        )
-#}
+
+#------------------------------------------------------
+# Mac-specific stuff follows
+#------------------------------------------------------
+shopt -s cdable_vars
+export ws="/Users/nrajrao/workspace/projects"
+
+export JAVA_HOME=$(/usr/libexec/java_home)
+export EDITOR="vim"
+sonar_install_path="/usr/local/bin/sonarqube"
+if [ -d $sonar_install_path ]; # for Sonar
+    then
+        export SONAR_HOME=$sonar_install_path;
+        alias sonar="$SONAR_HOME/bin/macosx-universal-64/sonar.sh"
+fi
