@@ -25,6 +25,8 @@ alias ls='ls -Alp'
 alias l='ls -xpA --color=auto'
 alias h=history
 alias gas='git add -A; git status'
+alias gaus='git add -u; git status'
+alias gd='git diff'
 alias gs='git status'
 alias gp='git push github `git rev-parse --abbrev-ref HEAD`'
 alias gh='git push heroku `git rev-parse --abbrev-ref HEAD`'
@@ -33,8 +35,8 @@ function gau(){
     git update-index --assume-unchanged $1
 }
 alias gl='git log'
-alias g='mvim'
-alias gvim='mvim'
+alias g='mvim >& /dev/null'
+alias gvim='mvim >& /dev/null'
 alias w='cd ~/workspace/haskell/haskell-sandbox'
 alias rr='rm -fr'
 alias python='python -B'
