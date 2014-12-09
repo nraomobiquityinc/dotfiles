@@ -4,45 +4,8 @@ filetype off                  " required
 "-------------------------------------------------------------------------------
 " User Interface
 "-------------------------------------------------------------------------------
-" Maximize
-"if has("win32") "Maximize GVIM on Windows - Neeraj
-"  au GUIEnter * simalt ~x
-"  set guifont=Consolas:h14
-"else
-"  set guifont=Liberation\ Mono\ 11
-"endif
-
-" Configure colors
-"if has("win32")
-"  if has("gui_running") "Gui color schemes
-"    if filereadable(expand('$VIMRUNTIME/colors/hemisu.vim'))
-"      color hemisu
-"    elseif filereadable(expand('$VIMRUNTIME/colors/neeraj.vim'))
-"      color neeraj
-"    elseif filereadable(expand('$VIMRUNTIME/colors/summerfruit256.vim'))
-"      color summerfruit256
-"    else
-"      color hemisu
-"    endif
-"  else "Console color schemes
-"    color zellner
-"  endif
-"else
-"  if has("gui_running") "Gui color schemes
-"    if filereadable(expand('$HOME/.vim/colors/hemisu.vim'))
-"      color hemisu
-"   elseif filereadable(expand('$HOME/.vim/colors/neeraj.vim'))
-"      color neeraj
-"    elseif filereadable(expand('$VIMRUNTIME/colors/summerfruit256.vim'))
-"     color summerfruit256
-"   else
-"     color hemisu
-"   endif
-" else "Console color schemes
-"   color zellner
-" endif
-"ndif
-
+colors peachpuff
+se guifont=Consolas:h15
 se autochdir "current directory changes to that of file being edited
 se nowrap guioptions+=b "always show bottom scrollbar
 se nu "show line numbers
