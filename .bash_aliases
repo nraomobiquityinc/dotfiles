@@ -46,7 +46,8 @@ alias ru='pkill -u 1000 vmtoolsd; vmtoolsd -n vmusr &' #restart unity
 alias t='tree'
 alias ta='sudo time-admin' #time and date dialog in xfce
 alias r=' source ~/.rvm/scripts/rvm && rvm use 1.8.7' # load ruby 1.8.7
-alias ps="ps -ef | grep $(whoami)"
+alias psme="ps -ef | grep $(whoami)"
+alias ps="ps -ef"
 
 #------------------------------------------------------
 # Python
@@ -73,9 +74,16 @@ export ws="/Users/nrajrao/workspace/projects"
 
 export JAVA_HOME=$(/usr/libexec/java_home)
 export EDITOR="vim"
+
 sonar_install_path="/usr/local/bin/sonarqube"
 if [ -d $sonar_install_path ]; # for Sonar
     then
         export SONAR_HOME=$sonar_install_path;
         alias sonar="$SONAR_HOME/bin/macosx-universal-64/sonar.sh"
 fi
+
+# set terminal/iterm tab title
+function title {
+    echo -ne "\033]0;"$*"\007"
+}
+#export PROMPT_COMMAND='echo -ne "\033]0;$(basename $(PWD))\007"'

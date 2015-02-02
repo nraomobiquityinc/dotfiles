@@ -1,23 +1,28 @@
+"-------------------------------------------------------------------------------
+" Before using this VIMRC, install Pathogen if you don't have it:
+" mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+"-------------------------------------------------------------------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 "-------------------------------------------------------------------------------
 " User Interface
 "-------------------------------------------------------------------------------
-colors peachpuff
-se guifont=Consolas:h15
-se autochdir "current directory changes to that of file being edited
-se nowrap guioptions+=b "always show bottom scrollbar
-se nu "show line numbers
-set backspace=eol,start,indent "backspace always works like one
-se ic "ignore case
-set smartcase
-se hls "highlight search term
+set background=dark
+colorscheme badwolf
+
 let mapleader = ","
+set autochdir "current directory changes to that of file being edited
+set nowrap guioptions+=b "always show bottom scrollbar
+set nu "show line numbers
+set backspace=eol,start,indent "backspace always works like one
+set ic "ignore case
+set smartcase
+set hls "highlight search term
 set nofoldenable
 set incsearch
-se ai "Auto indent
-se si "Smart indent
+set ai "Auto indent
+set si "Smart indent
 
 " Press Space to clear the current search highlights
 nnoremap <silent><Space> :nohlsearch<CR>
@@ -27,12 +32,6 @@ set wildmenu
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
-
-" Move a line of text using ALT+[jk]
-nmap <D-j> mz:m+<cr>`z
-nmap <D-k> mz:m-2<cr>`z
-vmap <D-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <D-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -53,12 +52,6 @@ endfunction
 "-------------------------------------------------------------------------------
 " Navigation
 "-------------------------------------------------------------------------------
-" Navigate split windows
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
@@ -78,16 +71,18 @@ if version >= 700
 endif
 
 " Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+set so=5
 
 "-------------------------------------------------------------------------------
-" Files
+" File Handling
 "-------------------------------------------------------------------------------
 se nobackup "don't create a backup file
 se nowb
 se noswapfile
 
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+"-------------------------------------------------------------------------------
+" File Handling - Delete trailing white space on save, useful for Python and CoffeeScript ;)
+"-------------------------------------------------------------------------------
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
@@ -96,12 +91,16 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite * :call DeleteTrailingWS()
 
-" Restore to last location in file
+"-------------------------------------------------------------------------------
+" File Handling - Restore to last location in file
+"-------------------------------------------------------------------------------
 if has("autocmd") "Open file where you left off
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif
 
-" Syntax highlighting for braces, operators and trailing whitespace
+"-------------------------------------------------------------------------------
+" File Handling - Syntax highlighting for braces, operators and trailing whitespace
+"-------------------------------------------------------------------------------
 if has("gui_running")
   if has("autocmd")
     "highlight braces and braces in blue
@@ -118,7 +117,12 @@ if has("gui_running")
 endif
 syntax enable "syntax highlighting
 
-" replace word under cursor with a user-prompted value
+map <D-r> :ReplaceCurWord<CR>
+command! -bar ReplaceCurWord call ReplaceCurWord()
+
+"-------------------------------------------------------------------------------
+" File Handling - replace word under cursor with a user-prompted value
+"-------------------------------------------------------------------------------
 function! ReplaceCurWord()
     "make sure an undo will bring us back where we were
     normal ix
@@ -141,23 +145,20 @@ function! ReplaceWord(to_replace,replacement) range
 endfunction
 
 "-------------------------------------------------------------------------------
-" Enable Java highlighting for standard classes
-" Assumes the files java.vim, javaid.vim, and html.vim are available in the syntax
-" folder
+" File Handling - Format Javascript on file save
 "-------------------------------------------------------------------------------
-if has("win32")
-  if has("gui_running")
-    if (filereadable(expand('$VIMRUNTIME/syntax/java.vim')) && filereadable(expand('$VIMRUNTIME/syntax/javaid.vim')) && filereadable(expand('$VIMRUNTIME/syntax/html.vim')))
-       let java_highlight_all=0
+" Workaround because vim-jsbeautify doesn't pick up .editorconfig from ~/.vim
+" or ~/. on a Mac
+let g:config_Beautifier= { 'js': { 'path': '~/.vim/bundle/vim-jsbeautify/plugin/lib/js/lib/beautify.js', 'indent_style': 'space', 'indent_size': '2', 'bin': 'node' }, 'html': { 'brace_style': 'expand', 'preserve_newlines': 'true', 'path': '~/.vim/bundle/vim-jsbeautify/plugin/lib/js/lib/beautify-html.js', 'indent_inner_html': 'true', 'indent_style': 'space', 'indent_size': '2', 'max_char': '78' }, 'css': { 'path': '~/.vim/bundle/vim-jsbeautify/plugin/lib/js/lib/beautify-css.js', 'indent_style': 'space', 'indent_size': '2' } }
+
+fun! FormatJavascript()
+    if exists('b:isJsFile')
+        :call JsBeautify()
     endif
-  endif
-else
-  if has("gui_running")
-    if (filereadable(expand('$HOME/.vim/syntax/java.vim')) && filereadable(expand('$HOME/.vim/syntax/javaid.vim')) && filereadable(expand('$HOME/.vim/syntax/html.vim')))
-       let java_highlight_all=0
-    endif
-  endif
-endif
+endfun
+
+autocmd BufWritePre * silent call FormatJavascript()
+autocmd FileType javascript let b:isJsFile=1
 
 "-------------------------------------------------------------------------------
 " Tab expansions and indenting
@@ -180,15 +181,15 @@ endif
 "    tabs after the first non-blank inserted as spaces if you do this
 "    though.  Otherwise aligned comments will be wrong when 'tabstop' is
 "    changed.
-se shiftwidth=4 "number of spaces for indent
+se shiftwidth=2 "number of spaces for indent
 se expandtab "replace tab by spaces
 se smarttab
-se tabstop=4
+se tabstop=2
 
 "-------------------------------------------------------------------------------
-" Key mappings - Neeraj
+" Key Mappings
 "-------------------------------------------------------------------------------
-map <F1> :Sexplore<CR>
+map <F1> :NERDTreeToggle<CR>
 map <F2> :w!<CR>
 map <F3> :wq!<CR>
 map <F4> :q!<CR>
@@ -199,19 +200,18 @@ map <F8> "=strftime("%d %B %Y @ %H:%M %Z")<CR>p"<Esc>
 map <F9> :w!<CR>:!python %<CR>
 map <F10> :InsFuncSnippet<CR>
 inoremap <F10> <Esc>:InsFuncSnippet<CR>a
-map <D-r> :ReplaceCurWord<CR>
-command! -bar ReplaceCurWord call ReplaceCurWord()
 
-"-------------------------------------------------------------------------------
-" Handle plugins
-"-------------------------------------------------------------------------------
-filetype on
-filetype plugin on
-filetype plugin indent on
-if filereadable(expand("~/.vim/plugin/autoclose.vim"))
-  let g:AutoClosePairs = {"/*": "*/\<Left>",'(': ')', '{': '}', '[': ']', "'": "'"}
-  let g:AutoCloseProtectedRegions = ["String", "Character"]
-endif
+" Move a line of text using ALT+[jk]
+map <D-j> mz:m+<cr>`z
+map <D-k> mz:m-2<cr>`z
+vmap <D-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <D-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+" Navigate split windows
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 "-------------------------------------------------------------------------------
 " User Functions
@@ -330,3 +330,12 @@ else
     au WinEnter    * let &l:statusline=g:activestatusline
   endif
 endif
+
+"-------------------------------------------------------------------------------
+" Load all plugins in ~/.vim/bundle/
+"-------------------------------------------------------------------------------
+execute pathogen#infect()
+
+filetype on
+filetype plugin on
+filetype plugin indent on

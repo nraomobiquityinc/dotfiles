@@ -1,0 +1,15 @@
+[submodule ".vim/bundle/command-t"]
+	path = .vim/bundle/command-t
+	url = https://github.com/wincent/command-t.git
+[submodule ".vim/bundle/conqueterm-vim"]
+	path = .vim/bundle/conqueterm-vim
+	url = git@github.com:pthrasher/conqueterm-vim.git
+[submodule ".vim/bundle/nerdtree"]
+	path = .vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule ".vim/bundle/vim-autoclose"]
+	path = .vim/bundle/vim-autoclose
+	url = https://github.com/Townk/vim-autoclose
+[submodule ".vim/bundle/vim-jsbeautify"]
+	path = .vim/bundle/vim-jsbeautify
+	url = https://github.com/maksimr/vim-jsbeautify.git
