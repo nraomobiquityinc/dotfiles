@@ -160,6 +160,15 @@ endfun
 autocmd BufWritePre * silent call FormatJavascript()
 autocmd FileType javascript let b:isJsFile=1
 
+fun! FormatHtml()
+    if exists('b:isHtmlFile')
+        :call HtmlBeautify()
+    endif
+endfun
+
+autocmd BufWritePre * silent call FormatHtml()
+autocmd FileType html let b:isHtmlFile=1
+
 "-------------------------------------------------------------------------------
 " Tab expansions and indenting
 "-------------------------------------------------------------------------------
@@ -335,6 +344,8 @@ endif
 " Load all plugins in ~/.vim/bundle/
 "-------------------------------------------------------------------------------
 execute pathogen#infect()
+
+set guifont=Menlo\ Regular:h14
 
 filetype on
 filetype plugin on
