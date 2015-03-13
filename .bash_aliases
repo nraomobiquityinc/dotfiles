@@ -5,7 +5,7 @@
 #------------------------------------------------------
 
 # Path
-PATH=~/.cabal/bin:$PATH
+PATH=/usr/local/bin:~/.cabal/bin:$PATH
 
 # Prompt
 red=$(tput setaf 1)
@@ -25,7 +25,7 @@ alias l='ls -xpA --color=auto'
 alias h=history
 alias gas='git add -A; git status'
 alias gaus='git add -u; git status'
-alias gd='git diff'
+alias gd="yes ' ' | git difftool"
 alias gb='git branch'
 alias gs='git status'
 alias gp='git push github `git rev-parse --abbrev-ref HEAD`'
