@@ -5,8 +5,9 @@
     new = !sh -c 'git log $1@{1}..$1@{0} "$@"' # show new commits made by last command
     whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -" # show current user
     whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short # show last commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [user]
-    name = Neeraj Rao
+    name = Raj
     email = nrao@mobiquityinc.com
 [color]
     ui = true
