@@ -34,7 +34,8 @@ alias gl='git log --decorate --graph --oneline'
 function gau(){
     git update-index --assume-unchanged $1
 }
-alias gl='git log -g'
+alias gl='git log'
+alias glg='git log -g'
 alias gup='git fetch up develop && git rebase up/develop'
 alias g='mvim >& /dev/null'
 alias gvim='mvim >& /dev/null'
