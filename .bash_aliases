@@ -4,8 +4,6 @@
 # General *Nix specific stuff
 #------------------------------------------------------
 
-# Path
-PATH=/usr/local/bin:~/.cabal/bin:$PATH
 
 # Prompt
 red=$(tput setaf 1)
@@ -28,6 +26,7 @@ alias gaus='git add -u; git status'
 alias gd="yes ' ' | git difftool"
 alias gb='git branch'
 alias gs='git status'
+alias gss='git diff --name-only --cached'
 alias gp='git push github `git rev-parse --abbrev-ref HEAD`'
 alias gh='git push heroku `git rev-parse --abbrev-ref HEAD`'
 alias gl='git log --decorate --graph --oneline'
@@ -36,7 +35,7 @@ function gau(){
 }
 alias gl='git log'
 alias glg='git log -g'
-alias gup='git fetch up develop && git rebase up/develop'
+alias gup='git fetch up `git rev-parse --abbrev-ref HEAD` && git rebase up/develop'
 alias g='mvim >& /dev/null'
 alias gvim='mvim >& /dev/null'
 alias vim='mvim'
